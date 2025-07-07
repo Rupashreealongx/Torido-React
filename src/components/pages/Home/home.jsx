@@ -5,6 +5,7 @@ import './Home.css'
 import Header from '../../Header/Header'
 import ExploreMenu from '../../ExploreMenu/ExploreMenu'
 import FoodDisplay from '../../FoodDisplay/FoodDisplay'
+
 export const Home = () => {
   const [category,setCategory]=useState("All")
   return (

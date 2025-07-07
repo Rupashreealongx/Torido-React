@@ -1,16 +1,15 @@
-// Navbar.js
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets";
-import { useCart } from "../CartContext"; 
+import { StoreContext } from "../../context/StoreContext"; // Use StoreContext
 import CartOffcanvas from "../pages/CartOffcanvas/CartOffcanvas";
 
 const Navbar = () => {
     const [menu, setMenu] = useState("home");
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const { getTotalCartItems } = useCart();
-    const navigate = useNavigate(); // Fixed: Added navigate hook
+    const { getTotalCartItems } = useContext(StoreContext); // Use StoreContext
+    const navigate = useNavigate();
 
     const totalCartItems = getTotalCartItems();
 
@@ -68,8 +67,7 @@ const Navbar = () => {
                     <button onClick={() => navigate('/login')}>Sign In</button>
                 </div>
             </div>
-           {isCartOpen && <CartOffcanvas isOpen={isCartOpen} onClose={handleCloseCart} />}
-
+            {isCartOpen && <CartOffcanvas isOpen={isCartOpen} onClose={handleCloseCart} />}
         </>
     );
 };

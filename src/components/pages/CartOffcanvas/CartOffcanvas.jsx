@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './CartOffcanvas.css';
-import { assets, food_list } from '../../../assets/assets';
-import { useCart } from '../../CartContext';
+import { assets } from '../../../assets/assets';
+import { StoreContext } from '../../../context/StoreContext'; // Changed from useCart to StoreContext
 
 const CartOffcanvas = ({ isOpen, onClose }) => {
-    const { cartItems, addToCart, removeFromCart, getTotalCartAmount, getTotalCartItems } = useCart();
+    const { 
+        cartItem, 
+        food_list, 
+        addToCart, 
+        removeFromCart, 
+        getTotalCartAmount, 
+        getTotalCartItems 
+    } = useContext(StoreContext); // Using StoreContext instead of useCart
 
     // Get cart items with details
     const getCartItemsWithDetails = () => {
         const items = [];
-        for (const itemId in cartItems) {
-            if (cartItems[itemId] > 0) {
+        for (const itemId in cartItem) { // Changed from cartItems to cartItem
+            if (cartItem[itemId] > 0) {
                 const itemInfo = food_list.find(product => product._id === itemId);
                 if (itemInfo) {
                     items.push({
                         ...itemInfo,
-                        quantity: cartItems[itemId]
+                        quantity: cartItem[itemId]
                     });
                 }
             }
@@ -25,14 +32,14 @@ const CartOffcanvas = ({ isOpen, onClose }) => {
 
     const cartItemsWithDetails = getCartItemsWithDetails();
     
-    // Calculate total amount from cartItems and food_list
+    // Calculate total amount from cartItem and food_list
     const calculateTotalAmount = () => {
         let total = 0;
-        for (const itemId in cartItems) {
-            if (cartItems[itemId] > 0) {
+        for (const itemId in cartItem) { // Changed from cartItems to cartItem
+            if (cartItem[itemId] > 0) {
                 const itemInfo = food_list.find(product => product._id === itemId);
                 if (itemInfo) {
-                    total += itemInfo.price * cartItems[itemId];
+                    total += itemInfo.price * cartItem[itemId];
                 }
             }
         }
@@ -98,7 +105,7 @@ const CartOffcanvas = ({ isOpen, onClose }) => {
 
     // Debug: Log the state to console
     console.log('Cart isOpen:', isOpen);
-    console.log('Cart Items:', cartItems);
+    console.log('Cart Items:', cartItem); // Changed from cartItems to cartItem
     console.log('Cart Items with Details:', cartItemsWithDetails);
     console.log('Total Amount:', totalAmount);
 
@@ -179,12 +186,12 @@ const CartOffcanvas = ({ isOpen, onClose }) => {
                                     <span>${totalAmount === 0 ? 0 : (totalAmount + 2).toFixed(2)}</span>
                                 </div>
                                 <div className="p-3">
-                  <h5 className="fw-bold mb-2">Cancellation Policy</h5>
-                  <p className="text-muted small mb-0">
-                    Orders cannot be cancelled once packed for delivery. In case of unexpected delays,
-                    a refund will be provided, if applicable.
-                  </p>
-                </div>
+                                    <h5 className="fw-bold mb-2">Cancellation Policy</h5>
+                                    <p className="text-muted small mb-0">
+                                        Orders cannot be cancelled once packed for delivery. In case of unexpected delays,
+                                        a refund will be provided, if applicable.
+                                    </p>
+                                </div>
              
                                 <button 
                                     className="checkout-btn"

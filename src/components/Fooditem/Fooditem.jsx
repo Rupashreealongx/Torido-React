@@ -1,11 +1,10 @@
-// Fooditem.js
-import React from 'react';
+import React, { useContext } from 'react';
 import './Fooditem.css';
 import { assets } from '../../assets/assets';
-import { useCart } from '../CartContext'; // Import useCart hook
+import { StoreContext } from '../../context/StoreContext'; // Use StoreContext instead of CartContext
 
 const Fooditem = ({ id, name, price, description, image }) => {
-    const { addToCart, removeFromCart, getItemCount } = useCart(); // Get cart functions
+    const { addToCart, removeFromCart, getItemCount } = useContext(StoreContext); // Use StoreContext
     const itemCount = getItemCount(id); // Get current count for this item
 
     const handleAddToCart = () => {
