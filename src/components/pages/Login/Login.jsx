@@ -8,7 +8,7 @@ const Login = () => {
     fullName: '',
     mobile: '',
     gender: '',
-    dateOfBirth: '',
+    age: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -25,7 +25,7 @@ const Login = () => {
       fullName: '',
       mobile: '',
       gender: '',
-      dateOfBirth: '',
+      age: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -54,7 +54,7 @@ const Login = () => {
       if (!formData.fullName) newErrors.fullName = 'Full name is required';
       if (!formData.mobile) newErrors.mobile = 'Mobile number is required';
       if (!formData.gender) newErrors.gender = 'Gender is required';
-      if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
+      if (!formData.age) newErrors.age = 'age is required';
       if (!formData.confirmPassword) {
         newErrors.confirmPassword = 'Confirm password is required';
       } else if (formData.password !== formData.confirmPassword) {
@@ -159,17 +159,17 @@ const Login = () => {
                 </select>
 
                 <input
-                  type="date"
-                  name="dateOfBirth"
-                  value={formData.dateOfBirth}
+                  type="age"
+                  name="age"
+                  value={formData.age}
                   onChange={handleInputChange}
-                  className={`form-control ${errors.dateOfBirth ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.age ? 'is-invalid' : ''}`}
                   disabled={isLoading}
-                  max={new Date().toISOString().split('T')[0]}
+                 
                 />
               </div>
               {errors.gender && <div className="error-text">{errors.gender}</div>}
-              {errors.dateOfBirth && <div className="error-text">{errors.dateOfBirth}</div>}
+              {errors.age && <div className="error-text">{errors.age}</div>}
             </>
           )}
 

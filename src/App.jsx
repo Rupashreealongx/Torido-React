@@ -6,7 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import Home from './components/pages/Home/home';
 import Cart from './components/pages/Cart/Cart';
 import PlaceOrder from './components/pages/PlaceOrder/PlaceOrder';
-import Login from './components/pages/Login/Login';
+import Login from './components/pages/Login/login';
 
 const App = () => {
   const location = useLocation();
