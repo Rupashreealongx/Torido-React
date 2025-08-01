@@ -24,7 +24,7 @@ const Navbar = () => {
     return (
         <>
             <div className="navbar">
-                <img src={assets.logo} alt="Logo" className="logo" />
+              <h1 className="logtext-orange-500 font-bold text-3xl font-sans" style={{color:'#ff4000ff' }}>TORIDO .</h1>  
                 <ul className="navbar-menu">
                     <li 
                         onClick={() => setMenu("home")} 

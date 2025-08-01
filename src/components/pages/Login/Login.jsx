@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'react-feather';
 import './Login.css'
+import {Signin} from '../../../service/Apicall';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [activeTab, setActiveTab] = useState('login');
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullName: '',
     mobile: '',
@@ -66,18 +72,39 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validate()) return;
+ 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validate()) return;
 
-    setIsLoading(true);
+  setIsLoading(true);
 
-    // Simulate API call
+  if (activeTab === 'login') {
+    try {
+      const response = await Signin({
+        username: formData.email,
+        password: formData.password,
+      });
+      console.log("Token:", response.data.access_token);
+      toast.success("Logged in successfully!");
+      localStorage.setItem('token', response.data.access_token);
+       setTimeout(() => {
+      navigate("/Torido-React/home");
+    }, 1500);
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+      toast.error("Invalid credentials. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  } else {
+    // Signup simulation
     setTimeout(() => {
       setIsLoading(false);
-      alert(`${activeTab === 'login' ? 'Logged in' : 'Account created'} successfully!`);
+      toast.success("Account created successfully!");
     }, 1500);
-  };
+  }
+};
 
   return (
     <>
@@ -85,6 +112,7 @@ const Login = () => {
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" 
         rel="stylesheet" 
       />
+      <ToastContainer />
     <div className="login-wrapper">
       <div className="login-card">
         <div className="text-center mb-4">
